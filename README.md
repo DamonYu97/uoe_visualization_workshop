@@ -1,4 +1,4 @@
-# Interactive Visualisations for Digital Humanities Data
+# Interactive Visualisations for Digital Humanities
 
 
 ## Welcome
