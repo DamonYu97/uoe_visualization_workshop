@@ -81,13 +81,13 @@ If you are using a managed university computer, please check in advance whether 
 
 | Files to support your progress |
 |---|
-| [Part_00. Setup guide before the workshop](./00_Setup_Before_Workshop.md) | 
+| [Part_00. Setup guide before the workshop](./Pre_workshop_00_Setup.md) | 
 Installation, GitHub account setup, VS Code setup, and getting the project files |
-| [Part_01. Building the visualisation](./01_Building_The_Visualisation.md) | 
+| [Part_01. Building the visualisation](./Part_01_Building_The_Visualisation.md) | 
 A written guide for the hands-on coding and visualisation activity  which follows the live demonstration. This is useful for reference if you choose to have it open whilst you work (optional).|
-| [Part_02. Publishing with GitHub Pages](./02_Publishing_With_GitHub_Pages.md) | 
+| [Part_02. Publishing with GitHub Pages](./Part_02_Publishing_With_GitHub_Pages.md) | 
 Guide for committing, pushing, and publishing your own version online. This will form written instructions for part 2 of the workshop to help guide the process. |
-| [Extra resource: Introduction to data visualisation](./03_Data_Visualisation_Intro.md) | 
+| [Extra resource: Introduction to data visualisation](./Data_Visualisation_Introduction_A resource.md) | 
 Supplementary resource on visualisation concepts, interactivity, accessibility, and further reading |
 
 ## Supplementary visualisation resource
