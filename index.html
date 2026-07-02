@@ -54,6 +54,14 @@
         height: 600px;
         border: 1px solid #ddd;
       }
+
+
+      #tools {
+        padding: 1rem;
+        background: #7f6363;
+        border-top: 1px solid #ddd;
+        color: white;
+      }
     </style>
   </head>
 
@@ -65,15 +73,24 @@
 
     <main>
 
-      <div id="map"></div>
+      <div>
+        <div id="tools">
+          Tools
+          <button onclick="resetView()">Reset View</button>
+          <button onclick="clearMarkers()">Clear Markers</button>
+        </div>
+        <div id="map"></div>
+      </div>
 
       <div id="viz">
         <h2>D3 Visualization</h2>
         <svg id="chart"></svg>
       </div>
+
     </main>
 
     <script>
+
       // add commented code for changing color/size/width etc. 
       // attach the leaflet map to the div with id "map"
       const map = L.map("map").setView([55.9533, -3.1883], 5);
@@ -112,7 +129,11 @@
                 element.source_data.birthplace.lon,
               ])
                 .addTo(map)
-                .bindPopup("University of Edinburgh");
+                .bindPopup(
+                  `<strong>${
+                    element.source_data?.birthplace?.place_name
+                  }</strong><br/><br/>${element.source_data?.birthplace?.country}`
+                );
             }
           });
 
@@ -197,11 +218,70 @@
             .attr("r", 3)
             .attr("fill", "steelblue");
 
+          // add hover effect to the points
+          svg
+            .selectAll(".point")
+            .on("mouseover", function (event, d) {
+              d3.select(this).attr("r", 6).attr("fill", "orange");
+              const tooltip = svg
+                .append("text")
+                .attr("id", "tooltip")
+                .attr("x", x(d.year) + 10)
+                .attr("y", y(d.count) - 10)
+                .attr("text-anchor", "start")
+                .attr("font-size", "12px")
+                .attr("font-weight", "bold")
+                .attr("fill", "black")
+                .text(`Year: ${d.year}, Count: ${d.count}`);
+            })
+            .on("mouseout", function (event, d) {
+              d3.select(this).attr("r", 3).attr("fill", "steelblue");
+              svg.select("#tooltip").remove();
+            });
+
             // add slider for the timeline
         })
         .catch((error) => {
           console.error("Error loading JSON:", error);
         });
+
+        function clearMarkers() {
+          map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) {
+              map.removeLayer(layer);
+            }
+          });
+        }
+
+        function resetView() {
+          // Reset the map view to the initial coordinates and zoom level
+          map.setView([55.9533, -3.1883], 5);
+          // load data and add markers again
+          d3.json("data/women_doctors_geo.json")
+            .then((data) => {
+              data.forEach((element) => {
+                if (
+                  element.source_data?.birthplace?.lat &&
+                  element.source_data?.birthplace?.lon
+                ) {
+                  L.marker([
+                    element.source_data.birthplace.lat,
+                    element.source_data.birthplace.lon,
+                  ])
+                    .addTo(map)
+                    .bindPopup(
+                      `<strong>${
+                        element.source_data?.birthplace?.place_name
+                      }</strong><br/><br/>${element.source_data?.birthplace?.country}`
+                    );
+                }
+              });
+            })
+            .catch((error) => {
+              console.error("Error loading JSON:", error);
+            });
+        }
+
     </script>
   </body>
 </html>
